@@ -39,14 +39,24 @@ public class Main extends Script {
         public boolean activate() {
             tree = tree(); // set the local Variable
             //Check if we need to chop the tree
-            return !Inventory.isFull() && Players.getMyPlayer().getAnimation() == -1 && tree != null;
+                return !Inventory.isFull() && Players.getMyPlayer().getAnimation() == -1 && tree != null;
         }
-   public int i = (5556);
         @Override
         public void execute() {
             //Chop the tree
-            tree.interact(i);
-            // tree.interact(Menu.clickButton(tree,5556));
+            if(Players.getMyPlayer().getAnimation() != 875){
+                SceneObjects.getNearest(1308);
+                tree.interact(646);
+                Time.sleep(15000);
+
+            }else{
+            if(Players.getMyPlayer().getAnimation() == 875)
+                Time.sleep(5000);
+                } if(Inventory.isFull()){
+
+            }
+
+            //tree.interact(Menu.);
             //Wait for the Player to chop the Tree
             Time.sleep(() -> Players.getMyPlayer().getAnimation() == -1, 3000);
         }
