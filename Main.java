@@ -6,7 +6,6 @@ import org.parabot.environment.scripts.Script;
 import org.parabot.environment.scripts.ScriptManifest;
 import org.parabot.environment.scripts.framework.Strategy;
 import org.rev317.min.api.methods.Inventory;
-import org.rev317.min.api.methods.Menu;
 import org.rev317.min.api.methods.Players;
 import org.rev317.min.api.methods.SceneObjects;
 import org.rev317.min.api.wrappers.Item;
@@ -52,9 +51,7 @@ public class Main extends Script {
             }else{
             if(Players.getMyPlayer().getAnimation() == 875)
                 Time.sleep(5000);
-                } if(Inventory.isFull()){
-
-            }
+                }
 
             //tree.interact(Menu.);
             //Wait for the Player to chop the Tree
@@ -76,7 +73,8 @@ public class Main extends Script {
 
         @Override
         public boolean activate() {
-            return false;
+
+            return Inventory.isFull()&&Players.getMyPlayer().getAnimation()==-1;
         }
 
         @Override
@@ -93,4 +91,5 @@ public class Main extends Script {
             }
         }
     }
+
 }
