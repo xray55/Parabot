@@ -37,6 +37,9 @@ public class Sharkfisher extends Script {
         boolean FISHS_ID;
 
     boolean bank;
+
+
+
         @Override
         public boolean activate() {
              // set the local Variable
@@ -60,20 +63,32 @@ public class Sharkfisher extends Script {
         private boolean bank() {
             if (Players.getMyPlayer().getAnimation() != 618 && !Players.getMyPlayer().isInCombat() && Inventory.isFull()) {
                 path2.traverse();
+                Time.sleep(2500);
                 path2.getNextTile();
+                Time.sleep(2500);
                 path2.hasReached();
                 Time.sleep(2500);
                 for (SceneObject Bank_booth : SceneObjects.getNearest(2213)) {
                        Time.sleep(2500);
-                        Bank_booth.interact(1);
+                  if(Bank_booth !=null && Players.getMyPlayer().distanceTo() <10 )
+                      Bank_booth.interact(1);
                         Time.sleep(2500);
                         Bank.depositAllExcept(312);
                         Time.sleep(2500);
                     Bank.close();
                     Time.sleep(1500);
+                    if(Players.getMyPlayer().getAnimation() == -1 &&!Inventory.isFull()&&Inventory.containts(312) && !Inventory.containts(Shark_ID)){
+
+                        return FISHS_ID;
+                    } else {
+                        if (Inventory.isFull() && Players.getMyPlayer().getAnimation() ==-1 && Inventory.containts(Shark_ID)){
+                            return bank;
+                        }
+                }
+
                 }
             }
-            return Inventory.isFull();
+            return false;
         }
 
 
@@ -90,6 +105,7 @@ public class Sharkfisher extends Script {
                 Npcs.getNearest(314);
                 Time.sleep(2000);
                 System.out.println("Scripting starting");
+                Time.sleep(2000);
             }else{
                 if(Players.getMyPlayer().getAnimation() == 618)
                     System.out.println("On the money");
