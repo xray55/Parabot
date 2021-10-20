@@ -1,6 +1,5 @@
 package com.company;
 
-import org.parabot.core.asm.wrappers.Interface;
 import org.parabot.environment.api.utils.Time;
 import org.parabot.environment.scripts.Category;
 import org.parabot.environment.scripts.Script;
@@ -10,8 +9,6 @@ import org.rev317.min.api.methods.*;
 import org.rev317.min.api.wrappers.*;
 
 import java.util.ArrayList;
-
-import static org.rev317.min.api.methods.Menu.*;
 
 @ScriptManifest(author = "Blade", category = Category.FISHING, description = "123", name = "Herefishyfishy", servers = { "2006Scape" }, version = 1)
 public class Sharkfisher extends Script {
@@ -39,54 +36,64 @@ public class Sharkfisher extends Script {
         // local variable to store the tree.
         boolean FISHS_ID;
 
-    SceneObject bank;
+    boolean bank;
         @Override
         public boolean activate() {
-            FISHS_ID = FISHS_ID(); // set the local Variable
-
+             // set the local Variable
+                if(Players.getMyPlayer().getAnimation() != 618 && !Inventory.isFull()){
+                    FISHS_ID = FISHS_ID();
+                } else {
+                    if(Players.getMyPlayer().getAnimation() == 618 && !Inventory.isFull()){
+                        System.out.println("Waiting on Inventory to Fill up!");
+                        Time.sleep(25000);
+                    } else {
+                        if(Players.getMyPlayer().getAnimation()==-1 && Inventory.isFull()){
+                            bank = bank();
+                        }
+                    }
+                }
             //Check if we need to chop the tree
             return true;
         }
 
 
-        private SceneObject bank() {
+        private boolean bank() {
             if (Players.getMyPlayer().getAnimation() != 618 && !Players.getMyPlayer().isInCombat() && Inventory.isFull()) {
                 path2.traverse();
                 path2.getNextTile();
                 path2.hasReached();
                 Time.sleep(2500);
                 for (SceneObject Bank_booth : SceneObjects.getNearest(2213)) {
+                       Time.sleep(2500);
                         Bank_booth.interact(1);
+                        Time.sleep(2500);
                         Bank.depositAllExcept(312);
+                        Time.sleep(2500);
                     Bank.close();
                     Time.sleep(1500);
-                    if (Inventory.containts(312) && !Inventory.containts(384)) {
-                        Walking.getNearestTileTo(new Tile(2602, 3420));
-                        Time.sleep(10000);
-                    }
-
                 }
             }
-            return bank;
+            return Inventory.isFull();
         }
 
 
         @Override
         public void execute() {
             if(Players.getMyPlayer().getAnimation() != 618 &&!Inventory.isFull()){
-                System.out.println("Scripting starting");
+
                 Time.sleep(2500);
                 path.traverse();
                path.getNextTile();
                path.hasReached();
                 Time.sleep(2500);
-            System.out.println("On the money");
-                Npcs.getNearest(314);
-                Time.sleep(60000);
 
+                Npcs.getNearest(314);
+                Time.sleep(2000);
+                System.out.println("Scripting starting");
             }else{
                 if(Players.getMyPlayer().getAnimation() == 618)
-                    Time.sleep(75000);
+                    System.out.println("On the money");
+                Time.sleep(130000);
             }
 
             // Players.getMyPlayer().interact(Menu.ACTION_CLICK_BUTTON);
