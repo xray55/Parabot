@@ -1,5 +1,4 @@
 package com.company;
-
 import org.parabot.environment.api.utils.Time;
 import org.parabot.environment.scripts.Category;
 import org.parabot.environment.scripts.Script;
@@ -7,10 +6,9 @@ import org.parabot.environment.scripts.ScriptManifest;
 import org.parabot.environment.scripts.framework.Strategy;
 import org.rev317.min.api.methods.*;
 import org.rev317.min.api.wrappers.*;
-
 import java.util.ArrayList;
 
-@ScriptManifest(author = "Blade", category = Category.FISHING, description = "123", name = "Herefishyfishy", servers = { "2006Scape" }, version = 1)
+@ScriptManifest(author = "Blade", category = Category.FISHING, description = "123", name = "Herefishyfishy", servers = { "2006Scape" }, version = 1.1)
 public class Sharkfisher extends Script {
     public ArrayList<Strategy> strategies = new ArrayList<Strategy>();
     private static final int[] Shark_ID = {384};
@@ -25,24 +23,15 @@ public class Sharkfisher extends Script {
         provide(strategies);
         return true;
     }
-
     @Override
     public void onFinish() {
         System.out.println("Script Stopped");
     }
-
     private class Fishing implements Strategy {
-
-        // local variable to store the tree.
         boolean FISHS_ID;
-
-    boolean bank;
-
-
-
+        boolean bank;
         @Override
         public boolean activate() {
-             // set the local Variable
                 if(Players.getMyPlayer().getAnimation() != 618 && !Inventory.isFull()){
                     FISHS_ID = FISHS_ID();
                 } else {
@@ -55,11 +44,8 @@ public class Sharkfisher extends Script {
                         }
                     }
                 }
-            //Check if we need to chop the tree
             return true;
         }
-
-
         private boolean bank() {
             if (Players.getMyPlayer().getAnimation() != 618 && !Players.getMyPlayer().isInCombat() && Inventory.isFull()) {
                 path2.traverse();
@@ -78,7 +64,6 @@ public class Sharkfisher extends Script {
                     Bank.close();
                     Time.sleep(1500);
                     if(Players.getMyPlayer().getAnimation() == -1 &&!Inventory.isFull()&&Inventory.containts(312) && !Inventory.containts(Shark_ID)){
-
                         return FISHS_ID;
                     } else {
                         if (Inventory.isFull() && Players.getMyPlayer().getAnimation() ==-1 && Inventory.containts(Shark_ID)){
@@ -90,39 +75,27 @@ public class Sharkfisher extends Script {
             }
             return false;
         }
-
-
         @Override
         public void execute() {
             if(Players.getMyPlayer().getAnimation() != 618 &&!Inventory.isFull()){
-
                 Time.sleep(2500);
                 path.traverse();
                path.getNextTile();
                path.hasReached();
                 Time.sleep(2500);
-
                 Npcs.getNearest(314);
                 Time.sleep(2000);
                 System.out.println("Scripting starting");
                 Time.sleep(2000);
-            }else{
+                } else {
                 if(Players.getMyPlayer().getAnimation() == 618)
                     System.out.println("On the money");
                 Time.sleep(130000);
             }
-
-            // Players.getMyPlayer().interact(Menu.ACTION_CLICK_BUTTON);
             if(Players.getMyPlayer().getAnimation()!=618 &&Inventory.isFull()){
                 bank = bank();
             }
-
-
         }
-
-        //tree.interact(Menu.);
-
-
         private boolean FISHS_ID() {
             if (Players.getMyPlayer().getAnimation() != 618 && !Players.getMyPlayer().isInCombat() && !Inventory.isFull()) {
                 for (Npc FISHS_ID : Npcs.getNearest(SharkSpot)) {
@@ -137,6 +110,3 @@ public class Sharkfisher extends Script {
         }
     }
 }
-
-
-
