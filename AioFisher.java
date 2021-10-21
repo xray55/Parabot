@@ -10,12 +10,14 @@ import org.rev317.min.api.wrappers.Item;
 import org.rev317.min.api.wrappers.Npc;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
+
 @ScriptManifest(author = "Blade", category = Category.FISHING, description = "Fishes stuff", name = "AioFisher", servers = { "2006Scape" }, version = 1)
 
 public class AioFisher extends Script {
 
     public ArrayList<Strategy> strategies = new ArrayList<Strategy>();
-    private static final int[] FISH_ID = {336,332};
+    private static final int[] FISH_ID = {318,322};
     public static final int[] FISHS_ID = {317,316,315};
     @Override
     public boolean onExecute() {
@@ -35,24 +37,32 @@ private class Fishing implements Strategy {
 
     @Override
     public boolean activate() {
-        FISHS_ID = FISHS_ID(); // set the local Variable
-        //Check if we need to chop the tree
-        return !Inventory.isFull() && Players.getMyPlayer().getAnimation() == -1; //&& FISHS_ID != null;
+         // set the local Variable
+        if(Players.getMyPlayer().getAnimation() != 621 && !Inventory.isFull()){
+            FISHS_ID = FISHS_ID();
+        } else {
+            if(!Inventory.isFull()&&Players.getMyPlayer().getAnimation()==621){
+                Time.sleep(75000);
+            }
+        }
+        return !Inventory.isFull() && Players.getMyPlayer().getAnimation() != 621; //&& FISHS_ID != null;
     }
     @Override
     public void execute() {
         //Chop the tree
-
-        if(Players.getMyPlayer().getAnimation() != 622 &&!Inventory.isFull()){
-            Npcs.getNearest(328,329);
-           // SceneObjects.getNearest(315,316);
-            Players.getMyPlayer().interact(Menu.ACTION_CLICK_BUTTON);
-            Time.sleep(60000);
-
-        }else{
+        if(Players.getMyPlayer().getAnimation() != 621 &&!Inventory.isFull()){
+            Time.sleep(2500);
+            Npcs.getNearest(316,317);
+            Time.sleep(2000);
+            System.out.println("Scripting starting");
+            Time.sleep(2000);
+        } else {
             if(Players.getMyPlayer().getAnimation() == 621)
-                Time.sleep(75000);
+                System.out.println("On the money");
+            Time.sleep(130000);
         }
+
+
 
         //tree.interact(Menu.);
         //Wait for the Player to chop the Tree
@@ -60,12 +70,11 @@ private class Fishing implements Strategy {
     }
 }
     private boolean FISHS_ID() {
-        for (Npc FISHS_ID : Npcs.getNearest(328, 329)) {
-            if (Players.getMyPlayer().getAnimation() != 622 && !Players.getMyPlayer().isInCombat() && !Inventory.isFull()) {
+        if (Players.getMyPlayer().getAnimation() != 621 && !Players.getMyPlayer().isInCombat() && !Inventory.isFull()) {
+            for (Npc FISHS_ID : Npcs.getNearest(316, 317)) {
                 FISHS_ID.interact(0);
                 Time.sleep(60000);
             }
-
         }
         return true;
     }
@@ -84,10 +93,10 @@ private static class Drop implements Strategy {
     @Override
     public boolean activate() {
 
-        if(Inventory.isFull() &Inventory.containts(FISH_ID));{
-
+        if(Inventory.isFull() && Inventory.containts(FISH_ID) && Players.getMyPlayer().getAnimation() != 621);{
+            return true;
         }
-        return true;
+
 
     }
 
@@ -96,7 +105,7 @@ private static class Drop implements Strategy {
         // Loop through all Inventory Items and Drop the once with Log ID.
         for (Item fish : Inventory.getItems(FISH_ID)) {
             //Check if Log Exists
-            if (fish != null) {
+            if (fish != null && Inventory.containts(FISH_ID)) {
                 Inventory.getItems(FISH_ID);//Drop the Log.
 
                 fish.drop();
